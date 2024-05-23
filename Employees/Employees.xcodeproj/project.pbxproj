@@ -12,7 +12,6 @@
 		11C5EB5F2BFE3C83005E9C9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11C5EB5E2BFE3C83005E9C9D /* Assets.xcassets */; };
 		11C5EB622BFE3C83005E9C9D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11C5EB602BFE3C83005E9C9D /* LaunchScreen.storyboard */; };
 		11C5EB652BFE3C83005E9C9D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C5EB642BFE3C83005E9C9D /* main.m */; };
-		11C5EB6D2BFE3CCA005E9C9D /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C5EB6C2BFE3CCA005E9C9D /* RegisterViewController.m */; };
 		11C5EB702BFE3CE7005E9C9D /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C5EB6F2BFE3CE7005E9C9D /* LoginViewController.m */; };
 		11D3259C2BFF97C40038FC9D /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D3259B2BFF97C40038FC9D /* MainViewController.m */; };
 		11D325B12BFF98DA0038FC9D /* QLSTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11D3259E2BFF98DA0038FC9D /* QLSTabBarController.m */; };
@@ -37,8 +36,6 @@
 		11C5EB612BFE3C83005E9C9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		11C5EB632BFE3C83005E9C9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11C5EB642BFE3C83005E9C9D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		11C5EB6B2BFE3CCA005E9C9D /* RegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
-		11C5EB6C2BFE3CCA005E9C9D /* RegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		11C5EB6E2BFE3CE7005E9C9D /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		11C5EB6F2BFE3CE7005E9C9D /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		11D3259A2BFF97C40038FC9D /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -90,8 +87,6 @@
 		113456482BFF912600082B35 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				11C5EB6B2BFE3CCA005E9C9D /* RegisterViewController.h */,
-				11C5EB6C2BFE3CCA005E9C9D /* RegisterViewController.m */,
 				11C5EB6E2BFE3CE7005E9C9D /* LoginViewController.h */,
 				11C5EB6F2BFE3CE7005E9C9D /* LoginViewController.m */,
 			);
@@ -337,7 +332,6 @@
 				11D325B82BFF98DA0038FC9D /* UIColor+QLSGradient.m in Sources */,
 				11D325B72BFF98DA0038FC9D /* UIBarButtonItem+QLS.m in Sources */,
 				11D325B52BFF98DA0038FC9D /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
-				11C5EB6D2BFE3CCA005E9C9D /* RegisterViewController.m in Sources */,
 				11D3259C2BFF97C40038FC9D /* MainViewController.m in Sources */,
 				11D325B32BFF98DA0038FC9D /* QLSTabBar.m in Sources */,
 				11C5EB702BFE3CE7005E9C9D /* LoginViewController.m in Sources */,
