@@ -25,7 +25,6 @@
     [super viewDidLoad];
     self.navigationItem.title = @"注册/登录";
     
-    
     self.view.backgroundColor = [UIColor whiteColor];
     
     _bUesrName = [[UILabel alloc] initWithFrame: CGRectMake(50, 100, 300, 70)];
@@ -63,7 +62,6 @@
     [_registerBtn setTitleColor: [UIColor blueColor] forState: UIControlStateNormal];
     [_registerBtn addTarget: self action: @selector(pressRegister) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: _registerBtn];
-    
     
 }
 
