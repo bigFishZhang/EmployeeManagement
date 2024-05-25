@@ -6,6 +6,7 @@
 //
 
 #import "LoginViewController.h"
+#import "SCLAlertView.h"
 
 @interface LoginViewController ()
 
@@ -63,6 +64,8 @@
     [_registerBtn addTarget: self action: @selector(pressRegister) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: _registerBtn];
     
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    [alert showSuccess:self title:@"登录成功" subTitle:@"" closeButtonTitle:@"好的" duration:0.0f];
 }
 
 

@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-Employees/Pods-Employees-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework
+${BUILT_PRODUCTS_DIR}/SCLAlertView-Objective-C/SCLAlertView_Objective_C.framework

@@ -7,5 +7,7 @@ target 'Employees' do
 
   # Pods for Employees
   pod 'AFNetworking', '~> 4.0'
+  pod 'SCLAlertView-Objective-C'
 
+#  pod 'zhPopupController', '~> 2.0'
 end
