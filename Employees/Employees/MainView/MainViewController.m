@@ -32,19 +32,19 @@
     self.topSeparatorColor = [UIColor orangeColor];
     self.itemSeparatorColor = gradientColor;
 
-    // 设置自定义高度
+    
     self.tabbarHeight = 60;
     
     self.childControllerAndIconArr = @[
 
-                                       /************第一个控制器配置信息*********************/
+                                    
                                        @{
-                                           TAB_VC_VIEWCONTROLLER : [[PhotoAlbumViewController alloc]init],  //控制器对象
-                                           TAB_NORMAL_ICON : @"icon_classTable",             //正常状态的Icon 名称
-                                           TAB_SELECTED_ICON : @"icon_classTable_selected",  //选中状态的Icon 名称
+                                           TAB_VC_VIEWCONTROLLER : [[PhotoAlbumViewController alloc]init],
+                                           TAB_NORMAL_ICON : @"icon_classTable",
+                                           TAB_SELECTED_ICON : @"icon_classTable_selected",
                                            TAB_TITLE_COLOR: [UIColor blackColor],
                                            TAB_TITLE_COLOR_SEL: [UIColor systemRedColor],
-                                           TAB_TITLE : @"我的图片"                                 //Nav和Tab的标题
+                                           TAB_TITLE : @"my picture"
                                            },
                                        ];
 }

@@ -27,33 +27,33 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = @"注册/登录";
+    self.navigationItem.title = @"Register/Login";
     
     self.view.backgroundColor = [UIColor whiteColor];
     
     _bUesrName = [[UILabel alloc] initWithFrame: CGRectMake(50, 100, 300, 70)];
-    _bUesrName.text = @"用户名：";
+    _bUesrName.text = @"userName：";
     [self.view addSubview: _bUesrName];
     
     _userName = [[UITextField alloc] initWithFrame: CGRectMake(50, 150, 300, 50)];
     _userName.borderStyle = UITextBorderStyleLine;
-    _userName.placeholder = @"请输入用户名......";
+    _userName.placeholder = @"please enter user name......";
     [self.view addSubview: _userName];
     
     _bUserKey = [[UILabel alloc] initWithFrame: CGRectMake(50, 200, 300, 70)];
-    _bUserKey.text = @"密码:";
+    _bUserKey.text = @"password:";
     [self.view addSubview: _bUserKey];
     
     _userKey = [[UITextField alloc] initWithFrame: CGRectMake(50, 250, 300, 50)];
     _userKey.borderStyle = UITextBorderStyleLine;
-    _userKey.placeholder = @"请输入密码......";
+    _userKey.placeholder = @"please enter password......";
     _userKey.secureTextEntry = YES;
     [self.view addSubview: _userKey];
     
     _login = [UIButton buttonWithType: UIButtonTypeRoundedRect];
     _login.frame = CGRectMake(100, 350, 100, 60);
     _login.backgroundColor = [UIColor brownColor];
-    [_login setTitle: @"登陆" forState: UIControlStateNormal];
+    [_login setTitle: @"Login" forState: UIControlStateNormal];
     [_login setTitleColor: [UIColor blueColor] forState: UIControlStateNormal];
     [_login addTarget: self action: @selector(pressLogin) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: _login];
@@ -62,7 +62,7 @@
     _registerBtn = [UIButton buttonWithType: UIButtonTypeRoundedRect];
     _registerBtn.frame = CGRectMake(250, 350, 100, 60);
     _registerBtn.backgroundColor = [UIColor brownColor];
-    [_registerBtn setTitle: @"注册" forState: UIControlStateNormal];
+    [_registerBtn setTitle: @"Register" forState: UIControlStateNormal];
     [_registerBtn setTitleColor: [UIColor blueColor] forState: UIControlStateNormal];
     [_registerBtn addTarget: self action: @selector(pressRegister) forControlEvents: UIControlEventTouchUpInside];
     [self.view addSubview: _registerBtn];
@@ -76,7 +76,7 @@
     if(self.userName.text.length == 0 || self.userKey.text.length == 0)
     {
         SCLAlertView *alert = [[SCLAlertView alloc] init];
-        [alert showError:@"请输入账号密码" subTitle:@"信息错误" closeButtonTitle:@"好的" duration:0.0f];
+        [alert showError:@"please enter password" subTitle:@"Info Error" closeButtonTitle:@"OK" duration:0.0f];
         return;
     }
     NSString *url = @"http://45.91.226.193:8987/api/base/login"; // 登录
@@ -110,28 +110,28 @@
             NSString *userName = [self getStringFromDictionary:userInfo forKey:@"userName" withDefault:nil];
             int64_t userID = [self getIntegerFromDictionary:userInfo forKey:@"ID" withDefault:0];
             [[UserInfoManager shareManager] updateUserInfo:userName userid:userID token:token];
-            NSLog(@"pressLogin请求成功url:%@,name:%@,pass:%@", task.currentRequest.URL, responseObject[@"name"], responseObject[@"pass"]);
+            NSLog(@"pressLogin success url:%@,name:%@,pass:%@", task.currentRequest.URL, responseObject[@"name"], responseObject[@"pass"]);
             dispatch_async(dispatch_get_main_queue(), ^{
                 SCLAlertView *alert = [[SCLAlertView alloc] init];
-                [alert showSuccess:self title:@"登录成功" subTitle:@"" closeButtonTitle:@"好的" duration:0.0f];
+                [alert showSuccess:self title:@"Login Success" subTitle:@"" closeButtonTitle:@"OK" duration:0.0f];
             [self.navigationController popViewControllerAnimated:YES];
             });
         }
         else
         {
-            NSLog(@"pressLogin请求失败url:%@,error:%@", url, rspDic);
+            NSLog(@"pressLogin Error url:%@,error:%@", url, rspDic);
             dispatch_async(dispatch_get_main_queue(), ^{
                 SCLAlertView *alert = [[SCLAlertView alloc] init];
                 
-                [alert showError:self title:@"操作失败请重试" subTitle:@"请重试" closeButtonTitle:@"好的" duration:0.0f];
+                [alert showError:self title:@"Error" subTitle:@"Please try again" closeButtonTitle:@"OK" duration:0.0f];
             });
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"pressLogin请求失败url:%@,error:%@", url, error);
+        NSLog(@"pressLogin Error url:%@,error:%@", url, error);
         dispatch_async(dispatch_get_main_queue(), ^{
             SCLAlertView *alert = [[SCLAlertView alloc] init];
             
-            [alert showError:self title:@"操作失败请重试" subTitle:@"请重试" closeButtonTitle:@"好的" duration:0.0f];
+            [alert showError:self title:@"Operation failed please try again" subTitle:@"Please try again" closeButtonTitle:@"OK" duration:0.0f];
         });
     }];
 }
@@ -142,7 +142,7 @@
     if(self.userName.text.length == 0 || self.userKey.text.length == 0)
     {
         SCLAlertView *alert = [[SCLAlertView alloc] init];
-        [alert showError:@"请输入账号密码" subTitle:@"信息错误" closeButtonTitle:@"好的" duration:0.0f];
+        [alert showError:@"Please enter your account password" subTitle:@"Error" closeButtonTitle:@"OK" duration:0.0f];
         return;
     }
     NSString *url = @"http://45.91.226.193:8987/api/base/register"; // 注册
@@ -168,28 +168,28 @@
         NSInteger code = [self getIntegerFromDictionary:rspDic forKey:@"code" withDefault:1];
         if(code == 0)
         {
-            NSLog(@"pressRegister请求成功url:%@,name:%@,pass:%@", task.currentRequest.URL, responseObject[@"name"], responseObject[@"pass"]);
+            NSLog(@"pressRegister success url:%@,name:%@,pass:%@", task.currentRequest.URL, responseObject[@"name"], responseObject[@"pass"]);
             dispatch_async(dispatch_get_main_queue(), ^{
                 SCLAlertView *alert = [[SCLAlertView alloc] init];
                 
-                [alert showSuccess:self title:@"注册成功" subTitle:@"请登录" closeButtonTitle:@"好的" duration:0.0f];
+                [alert showSuccess:self title:@"registration success" subTitle:@"请登录" closeButtonTitle:@"好的" duration:0.0f];
             });
         }
         else
         {
-            NSLog(@"pressRegister请求失败url:%@,error:%@", url, rspDic);
+            NSLog(@"pressRegister failed url:%@,error:%@", url, rspDic);
             dispatch_async(dispatch_get_main_queue(), ^{
                 SCLAlertView *alert = [[SCLAlertView alloc] init];
-                [alert showError:self title:@"注册失败" subTitle:@"请重试" closeButtonTitle:@"好的" duration:0.0f];
+                [alert showError:self title:@"registration failed" subTitle:@"Please try again" closeButtonTitle:@"OK" duration:0.0f];
             });
         }
      
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"pressRegister请求失败url:%@,error:%@", url, error);
+        NSLog(@"pressRegister failed url:%@,error:%@", url, error);
         dispatch_async(dispatch_get_main_queue(), ^{
             SCLAlertView *alert = [[SCLAlertView alloc] init];
-            [alert showError:self title:@"注册失败" subTitle:@"请重试" closeButtonTitle:@"好的" duration:0.0f];
+            [alert showError:self title:@"registration failed" subTitle:@"Please try again" closeButtonTitle:@"OK" duration:0.0f];
         });
     }];
 }

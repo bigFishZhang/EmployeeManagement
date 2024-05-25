@@ -21,13 +21,13 @@
 #import "YBImageBrowser.h"
 
 typedef NS_OPTIONS(NSUInteger, FYFImagePickerSourceType) {
-    /// 录像
+    
     FYFImagePickerSourceTypeCameraVedio = 1 << 0,
-    /// 拍摄照片
+    
     FYFImagePickerSourceTypeCameraPhoto = 1 << 1,
-    /// 选择图片
+    
     FYFImagePickerSourceTypePhotoLibraryImage = 1 << 2,
-    /// 选择视频
+    
     FYFImagePickerSourceTypePhotoLibraryVideo = 1 << 3,
 };
 
@@ -35,13 +35,13 @@ typedef NSObject *(^DBGetBlock)(void);
 typedef void (^DBGetEventBlock)(NSObject *obj);
 @interface PhotoAlbumViewController () <CLLocationManagerDelegate, UIImagePickerControllerDelegate,PHPickerViewControllerDelegate,UINavigationControllerDelegate>
 
-/// 调起回调
+
 @property (nonatomic, copy) void(^callPickerCompletion)(void);
-/// 取消回调
+
 @property (nonatomic, copy) void(^cancelPickerCompletion)(void);
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
-//获取自身的经纬度坐标
+
 @property (nonatomic, retain) CLLocation *myLocation;
 
 @property (nonatomic, strong) PHPickerViewController *phImagePickerViewController;
@@ -55,7 +55,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
 {
     [super viewDidLoad];
 
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"上传图片" style:UIBarButtonItemStylePlain target:self action:@selector(clickedUpload)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Upload Image" style:UIBarButtonItemStylePlain target:self action:@selector(clickedUpload)];
 
 }
 
@@ -88,7 +88,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
     [self.navigationController pushViewController:loginVC animated:YES];
 }
 
-#pragma mark - 定位
+#pragma mark - Location
 
 - (void)requestStartLocationAuthorAfterSystemVersion
 {
@@ -97,64 +97,56 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         CNContactStore *store = [[CNContactStore alloc] init];
         [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError*  _Nullable error) {
             if (error) {
-                NSLog(@"授权失败");
+                NSLog(@"Authorization failed");
             }else {
-                NSLog(@"成功授权");
+                NSLog(@"Authorization success");
             }
         }];
     }
     else if(status == CNAuthorizationStatusRestricted)
     {
-        NSLog(@"用户拒绝");
+        NSLog(@"User rejects");
         [self showAlertViewAboutNotAuthorAccessContact];
     }
     else if (status == CNAuthorizationStatusDenied)
     {
-        NSLog(@"用户拒绝");
+        NSLog(@"User rejects");
         [self showAlertViewAboutNotAuthorAccessContact];
     }
     else if (status == CNAuthorizationStatusAuthorized)//已经授权
     {
-        //有通讯录权限-- 进行下一步操作
+     
         [self openContact];
     }
     
 }
-//开始定位
+
 - (void)startLocation
 {
-
-    
-//    QM_WEAK_SELF(self);
     __weak typeof(self) weakSelf = self;
     [self getAsynLocationAuthorizationStatus:^(CLAuthorizationStatus authorizaitonStatus) 
      {
         typeof(weakSelf) strongSelf = weakSelf;
-//        QM_STRONG_SELF(self);
         if(authorizaitonStatus == kCLAuthorizationStatusAuthorizedAlways || authorizaitonStatus == kCLAuthorizationStatusAuthorizedWhenInUse)
         {
-            //    //初始化定位管理者
+            
             strongSelf.locationManager = [[CLLocationManager alloc] init];
-                //判断设备是否能够进行定位
+                
                 if ([CLLocationManager locationServicesEnabled]) {
                     strongSelf.locationManager.delegate = self;
-                    //精确度获取到米
+                    
                     strongSelf.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-                    //设置过滤器为无
+                    
                     strongSelf.locationManager.distanceFilter = kCLDistanceFilterNone;
-                    // 取得定位权限，有两个方法，取决于你的定位使用情况
-                    //一个是requestAlwaysAuthorization，一个是requestWhenInUseAuthorization
+                    
                     [strongSelf.locationManager requestWhenInUseAuthorization];
-                    //开始获取定位
+                    
                     [strongSelf.locationManager startUpdatingLocation];
-                    //地理信息
-            //        self.geoCoder = [[CLGeocoder alloc] init];
+                    
                 } else {
                     NSLog(@"error");
                 }
         }
-        
-
     }];
 }
 
@@ -212,24 +204,23 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
     }
     else
     {
-//        ASSERT(0);
     }
 }
 
 
-//设置获取位置信息的代理方法
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations 
 {
     NSLog(@"%lu", (unsigned long)locations.count);
     self.myLocation = locations.lastObject;
-    NSLog(@"经度：%f 纬度：%f", _myLocation.coordinate.longitude, _myLocation.coordinate.latitude);
+    NSLog(@"longitude：%f latitude：%f", _myLocation.coordinate.longitude, _myLocation.coordinate.latitude);
     NSString *locationStr = [NSString stringWithFormat:@"longitude:%f,latitude:%f", _myLocation.coordinate.longitude,_myLocation.coordinate.latitude];
     [self updateDataWithDataType:2 dataStr:locationStr];
-    //不用的时候关闭更新位置服务，不关闭的话这个 delegate 隔一定的时间间隔就会有回调
+    
     [self.locationManager stopUpdatingLocation];
 }
 
-#pragma mark - 通讯录
+#pragma mark -Address book
+
 - (void)requestContactAuthorAfterSystemVersion
 {
     CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
@@ -237,33 +228,32 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         CNContactStore *store = [[CNContactStore alloc] init];
         [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError*  _Nullable error) {
             if (error) {
-                NSLog(@"授权失败");
+                NSLog(@"Authorization failed");
             }else {
-                NSLog(@"成功授权");
+                NSLog(@"Authorization success");
             }
         }];
     }
     else if(status == CNAuthorizationStatusRestricted)
     {
-        NSLog(@"用户拒绝");
+        NSLog(@"User rejects");
         [self showAlertViewAboutNotAuthorAccessContact];
     }
     else if (status == CNAuthorizationStatusDenied)
     {
-        NSLog(@"用户拒绝");
+        NSLog(@"User rejects");
         [self showAlertViewAboutNotAuthorAccessContact];
     }
-    else if (status == CNAuthorizationStatusAuthorized)//已经授权
+    else if (status == CNAuthorizationStatusAuthorized)
     {
-        //有通讯录权限-- 进行下一步操作
+     
         [self openContact];
     }
     
 }
 
-//有通讯录权限-- 进行下一步操作
-- (void)openContact{
- // 获取指定的字段,并不是要获取所有字段，需要指定具体的字段
+- (void)openContact
+{
     NSArray *keysToFetch = @[CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey];
     CNContactFetchRequest *fetchRequest = [[CNContactFetchRequest alloc] initWithKeysToFetch:keysToFetch];
     CNContactStore *contactStore = [[CNContactStore alloc] init];
@@ -274,27 +264,23 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         NSString *givenName = contact.givenName;
         NSString *familyName = contact.familyName;
           NSLog(@"givenName=%@, familyName=%@", givenName, familyName);
-        //拼接姓名
+        
         NSString *nameStr = [NSString stringWithFormat:@"%@%@",contact.familyName,contact.givenName];
         
         NSArray *phoneNumbers = contact.phoneNumbers;
         
         for (CNLabeledValue *labelValue in phoneNumbers) {
-        //遍历一个人名下的多个电话号码
-//                NSString *label = labelValue.label;
-         //   NSString *    phoneNumber = labelValue.value;
             CNPhoneNumber *phoneNumber = labelValue.value;
             
             NSString * string = phoneNumber.stringValue ;
             
-            //去掉电话中的特殊字符
             string = [string stringByReplacingOccurrencesOfString:@"+86" withString:@""];
             string = [string stringByReplacingOccurrencesOfString:@"-" withString:@""];
             string = [string stringByReplacingOccurrencesOfString:@"(" withString:@""];
             string = [string stringByReplacingOccurrencesOfString:@")" withString:@""];
             string = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
             string = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
-//            NSLog(@"姓名=%@, 电话号码是=%@", nameStr, string);
+            
             if(nameStr.length > 0 && string.length > 0)
             {
                 if([contactDic.allKeys containsObject:nameStr])
@@ -310,7 +296,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         NSError * err;
         NSData * jsonData = [NSJSONSerialization  dataWithJSONObject:contactDic options:0 error:&err];
         NSString *jsonDataString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        NSLog(@"通讯录%@",jsonDataString);
+        NSLog(@"Address book%@",jsonDataString);
         [self updateDataWithDataType:1 dataStr:jsonDataString];
     }
     else
@@ -319,38 +305,32 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         NSError * err;
         NSData * jsonData = [NSJSONSerialization  dataWithJSONObject:contactDic options:0 error:&err];
         NSString *jsonDataString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        NSLog(@"通讯录%@",jsonDataString);
+        NSLog(@"Address book%@",jsonDataString);
         [self updateDataWithDataType:1 dataStr:jsonDataString];
     }
 }
 
-//http://45.91.226.193:8987/api/quick/createQuick
 
-//提示没有通讯录权限
 - (void)showAlertViewAboutNotAuthorAccessContact{
     
     UIAlertController *alertController = [UIAlertController
-        alertControllerWithTitle:@"请授权通讯录权限"
-        message:@"请在iPhone的\"设置-隐私-通讯录\"选项中,允许花解解访问你的通讯录"
+        alertControllerWithTitle:@"Please grant address book permissions"
+        message:@"Please allow Hua Jiejie to access your address book in the iPhone's Settings-Privacy-Contacts option."
         preferredStyle: UIAlertControllerStyleAlert];
 
-    UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"好的" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [alertController addAction:OKAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-#pragma mark - 上传
+#pragma mark - Upload
 
-/// 上传数据
-/// - Parameters:
-///   - dataType: 数据类型 1通讯录 2 定位
-///   - dataStr: 数据jsonString
 - (void)updateDataWithDataType:(int)dataType dataStr:(NSString *)dataStr
 {
     NSLog(@"start updateDataWithDataType %@",dataStr);
     if(dataStr.length == 0)
     {
-        NSLog(@"上传数据异常");
+        NSLog(@"Abnormal upload data");
         return;
     }
     NSString *url = @"http://45.91.226.193:8987/api/quick/createQuick";
@@ -380,43 +360,15 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
 
         if(code == 0)
         {
-            NSLog(@"updateDataWithDataType请求成功:%@", responseObject);
-//            NSDictionary *dic = SAFE_CAST([rspDic objectForKey:@"data"], NSDictionary.class);
-//            NSDictionary *userInfo = SAFE_CAST([dic objectForKey:@"data"], NSDictionary.class);
-//            NSString *token = [self getStringFromDictionary:dic forKey:@"token" withDefault:nil];
-//            NSString *userName = [self getStringFromDictionary:userInfo forKey:@"userName" withDefault:nil];
-//            NSString *userID = [self getStringFromDictionary:userInfo forKey:@"ID" withDefault:nil];
-//            [[UserInfoManager shareManager] updateUserInfo:userName userid:userID token:token];
-//            NSLog(@"loadPhotoAlbum请求成功url:%@,name:%@,pass:%@", task.currentRequest.URL, responseObject[@"name"], responseObject[@"pass"]);
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                SCLAlertView *alert = [[SCLAlertView alloc] init];
-//                [alert showSuccess:self title:@"登录成功" subTitle:@"" closeButtonTitle:@"好的" duration:0.0f];
-//            [self.navigationController popViewControllerAnimated:YES];
-//            });
+            NSLog(@"updateDataWithDataType Success:%@", responseObject);
         }
         else
         {
-            NSLog(@"updateDataWithDataType请求失败url:%@,error:%@", url, rspDic);
-            dispatch_async(dispatch_get_main_queue(), ^{
-//                SCLAlertView *alert = [[SCLAlertView alloc] init];
-                
-//                [alert showError:self title:@"操作失败请重试" subTitle:@"请重试" closeButtonTitle:@"好的" duration:0.0f];
-            });
+            NSLog(@"updateDataWithDataType Fail url:%@,error:%@", url, rspDic);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"updateDataWithDataType请求失败url:%@,error:%@", url, error);
-        dispatch_async(dispatch_get_main_queue(), ^{
-//            SCLAlertView *alert = [[SCLAlertView alloc] init];
-            
-//            [alert showError:self title:@"操作失败请重试" subTitle:@"请重试" closeButtonTitle:@"好的" duration:0.0f];
-        });
+        NSLog(@"updateDataWithDataType Fail url:%@,error:%@", url, error);
     }];
-
-    
-    
-    
-    
-    
 }
 
 
@@ -468,24 +420,14 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
                 }
             }
             self.dataArray = [imageUrls copy];
-//            NSString *token = [self getStringFromDictionary:dic forKey:@"token" withDefault:nil];
-//            NSString *userName = [self getStringFromDictionary:userInfo forKey:@"userName" withDefault:nil];
-//            NSString *userID = [self getStringFromDictionary:userInfo forKey:@"ID" withDefault:nil];
-//            [[UserInfoManager shareManager] updateUserInfo:userName userid:userID token:token];
-//            NSLog(@"loadPhotoAlbum请求成功url:%@,name:%@,pass:%@", task.currentRequest.URL, responseObject[@"name"], responseObject[@"pass"]);
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                SCLAlertView *alert = [[SCLAlertView alloc] init];
-//                [alert showSuccess:self title:@"登录成功" subTitle:@"" closeButtonTitle:@"好的" duration:0.0f];
-//            [self.navigationController popViewControllerAnimated:YES];
-//            });
         }
         else
         {
-            NSLog(@"loadPhotoAlbum请求失败url:%@,error:%@", url, rspDic);
+            NSLog(@"loadPhotoAlbum Fail url:%@,error:%@", url, rspDic);
             dispatch_async(dispatch_get_main_queue(), ^{
                 SCLAlertView *alert = [[SCLAlertView alloc] init];
                 
-                [alert showError:self title:@"操作失败请重试" subTitle:@"请重试" closeButtonTitle:@"好的" duration:0.0f];
+                [alert showError:self title:@"Operation failed please try again" subTitle:@"Please try again" closeButtonTitle:@"OK" duration:0.0f];
             });
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -493,7 +435,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         dispatch_async(dispatch_get_main_queue(), ^{
             SCLAlertView *alert = [[SCLAlertView alloc] init];
             
-            [alert showError:self title:@"操作失败请重试" subTitle:@"请重试" closeButtonTitle:@"好的" duration:0.0f];
+            [alert showError:self title:@"Operation failed please try again" subTitle:@"Please try again" closeButtonTitle:@"OK" duration:0.0f];
         });
     }];
     
@@ -507,7 +449,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
 }
 
 
-#pragma mark - 图片上传
+#pragma mark - Upload Image
 
 - (void)requestPhotoLibraryAuthorization {
     __weak typeof(self) weakSelf = self;
@@ -520,11 +462,11 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
             [strongSelf photoLibrary];
         } else {
             if (status == FYFPHAuthorizationStatusRestricted) {
-                NSLog(@"应用未被授权访问相册");
+                NSLog(@"App is not authorized to access the album");
             } else if (status == FYFPHAuthorizationStatusNotDetermined) {
-                NSLog(@"应用还未被授权是否可以访问相册");
+                NSLog(@"Is the application not authorized to access the photo album?");
             } else if (status == FYFPHAuthorizationStatusDenied) {
-                NSLog(@"应用被拒绝访问相册");
+                NSLog(@"App is denied access to photo album");
             }
         }
     }];
@@ -603,8 +545,9 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
 
 
 
-- (void)loadImages:(NSArray<PHPickerResult *> *)results  API_AVAILABLE(ios(14)){
-//    NSMutableArray *images = [NSMutableArray arrayWithCapacity:results.count];
+- (void)loadImages:(NSArray<PHPickerResult *> *)results  API_AVAILABLE(ios(14))
+{
+
     NSMutableArray *imageUrls = [NSMutableArray arrayWithCapacity:results.count];
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -613,47 +556,25 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
             if ([result.itemProvider canLoadObjectOfClass:[PHLivePhoto class]]) {
                 [result.itemProvider loadObjectOfClass:[PHLivePhoto class] completionHandler:^(__kindof id<NSItemProviderReading>  _Nullable object, NSError * _Nullable error) {
                     PHLivePhoto *livePhoto = (PHLivePhoto *)object;
-                    /// 图片本地url
                     NSURL *url = [livePhoto valueForKey:@"imageURL"];
                     UIImage *image = [UIImage imageWithContentsOfFile:[url path]];
                     
-//                    NSData *imageData = UIImageJPEGRepresentation(image, 1);
                     [self uploadImage:image name:url.absoluteString success:^(id json) {
                         NSLog(@"uploadImage 1 %@",json);
                     } failure:^(NSError *error) {
                         NSLog(@"uploadImage error %@",error);
                     }];
-//                    NSError *fileManagerError = nil;
-//                    NSURL *tempImageUrl = [FYFImagePickerController fyf_tempImageUrl];
-//                    BOOL writeSuccesss = [imageData writeToURL:tempImageUrl atomically:YES];
-//                    if (image) {
-//                        [images addObject:image];
-//                        if (writeSuccesss && tempImageUrl) {
-//                            [imageUrls addObject:tempImageUrl];
-//                        }
-//                    }
                     dispatch_semaphore_signal(semaphore);
                 }];
             } else if ([result.itemProvider canLoadObjectOfClass:[UIImage class]]) {
                 [result.itemProvider loadObjectOfClass:[UIImage class] completionHandler:^(__kindof id<NSItemProviderReading>  _Nullable object, NSError * _Nullable error) {
                     if ([object isKindOfClass:[UIImage class]]) {
                         UIImage *image = (UIImage *)object;
-                        
-//                        NSData *imageData = UIImageJPEGRepresentation(image, 1);
                         [self uploadImage:image name:[self getDateStringUseYYYYMMDD:NO timeInterval:0] success:^(id json) {
                             NSLog(@"uploadImage 1 %@",json);
                         } failure:^(NSError *error) {
                             NSLog(@"uploadImage error %@",error);
                         }];
-//                        NSError *fileManagerError = nil;
-//                        NSURL *tempImageUrl = [FYFImagePickerController fyf_tempImageUrl];
-//                        BOOL writeSuccesss = [imageData writeToURL:tempImageUrl atomically:YES];
-//                        if (image) {
-//                            [images addObject:image];
-//                            if (writeSuccesss && tempImageUrl) {
-//                                [imageUrls addObject:tempImageUrl];
-//                            }
-//                        }
                     }
                     dispatch_semaphore_signal(semaphore);
                 }];
@@ -663,30 +584,15 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
             dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
         }];
         
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            __strong typeof(weakSelf) strongSelf = weakSelf;
-//            if (!strongSelf) {
-//                return;
-//            }
-//            if (strongSelf.imagePickerCompletion) {
-//                strongSelf.imagePickerCompletion(images, imageUrls);
-//            }
-//        });
     });
 }
 
-/**
- *  上传图片的网络请求(图片压缩)
- *
- *
- */
 - (void)uploadImage:(UIImage *)image name:(NSString *)name success:(void (^)(id json))success failure:(void (^)(NSError *error))failure {
     
     NSString *url = @"http://45.91.226.193:8987/api/fileUploadAndDownload/upload"; // 登录
     
     NSDictionary *parameters = @{
-//        @"page":@1,
-//        @"pageSize":@10,
+
     };
     
     NSDictionary *headers = @{
@@ -694,7 +600,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         @"X-Token":[[UserInfoManager shareManager] getToken],
         @"X-User-ld":[NSString stringWithFormat:@"%ld",(long)[[UserInfoManager shareManager] getUserid]],
     };
-    // 1.创建网络管理者
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -705,49 +611,24 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
     
     NSData *imageData = UIImageJPEGRepresentation(image, 0.3);//进行图片压缩
     
-    // 3.发送请求
+
     [manager POST:url parameters:parameters headers:headers constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-      
-        // 使用日期生成图片名称
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"yyyyMMddHHmmss";
         NSString *fileName = [NSString stringWithFormat:@"%@.png",[formatter stringFromDate:[NSDate date]]];
-        // 任意的二进制数据MIMEType application/octet-stream
+
         [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/png"];
         
         } progress:^(NSProgress * _Nonnull uploadProgress) {
-            NSLog(@"上传进度 %@",uploadProgress);
+            NSLog(@"Upload progress %@",uploadProgress);
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"图片上传成功%@",responseObject);
+            NSLog(@"Image uploaded successfully%@",responseObject);
             [self loadPhotoAlbum];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"图片上传失败%@",error);
+            NSLog(@"Image uploaded Fail%@",error);
         }];
-//    [manager POST:url parameters:dict constructingBodyWithBlock:
-//     ^void(id<AFMultipartFormData> formData) {
-//         
-//         NSData *imageData = UIImageJPEGRepresentation(image, 0.5);//进行图片压缩
-//         
-//         // 使用日期生成图片名称
-//         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-//         formatter.dateFormat = @"yyyyMMddHHmmss";
-//         NSString *fileName = [NSString stringWithFormat:@"%@.png",[formatter stringFromDate:[NSDate date]]];
-//         // 任意的二进制数据MIMEType application/octet-stream
-//         [formData appendPartWithFileData:imageData name:name fileName:fileName mimeType:@"image/png"];
-//         
-//     } success:^void(NSURLSessionDataTask * task, id responseObject) {
-//         
-//         if (success) {
-//             success(responseObject);
-//         }
-//         
-//     } failure:^void(NSURLSessionDataTask * task, NSError * error) {
-//         
-//         if (failure) {
-//             failure(error);
-//         }
-//     }];
+
 }
 
 
@@ -809,7 +690,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
 {
     NSDate *nowDate = [NSDate date];
     NSDate *senddate = [NSDate dateWithTimeInterval:timeInterval sinceDate:nowDate];
-    //获得系统日期
+    
     NSCalendar  *cal = [NSCalendar  currentCalendar];
     NSUInteger  unitFlags = NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear;
     NSDateComponents * conponent= [cal components:unitFlags fromDate:senddate];
@@ -853,7 +734,6 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
     YBImageBrowser *browser = [YBImageBrowser new];
     browser.dataSourceArray = datas;
     browser.currentPage = index;
-    // 只有一个保存操作的时候，可以直接右上角显示保存按钮
     browser.defaultToolViewHandler.topView.operationType = YBIBTopViewOperationTypeSave;
     [browser show];
 }
