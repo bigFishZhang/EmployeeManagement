@@ -10,5 +10,6 @@ target 'Employees' do
   pod 'SCLAlertView-Objective-C'
   pod 'SDWebImage', '~> 5.0'
   pod 'YBImageBrowser'
+  pod 'FYFImagePicker'
 #  pod 'zhPopupController', '~> 2.0'
 end

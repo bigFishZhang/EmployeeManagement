@@ -2,7 +2,7 @@
 //  UserInfoManager.m
 //  Employees
 //
-//  Created by leozbzhang on 2024/5/25.
+//  Created by leo on 2024/5/25.
 //
 
 #import "UserInfoManager.h"

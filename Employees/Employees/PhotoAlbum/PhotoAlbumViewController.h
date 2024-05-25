@@ -2,14 +2,14 @@
 //  PhotoAlbumViewController.h
 //  Employees
 //
-//  Created by leozbzhang on 2024/5/23.
+//  Created by leo on 2024/5/23.
 //
 
 #import <UIKit/UIKit.h>
-
+#import "BaseListController.h"
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PhotoAlbumViewController : UIViewController
+@interface PhotoAlbumViewController : BaseListController
 
 @end
 

@@ -55,32 +55,127 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6C8A0C7F-6B4B-43CE-A4D9-4EBBE8082024"
+            uuid = "ABF1D050-8CE2-465F-9F72-8512968BA1FD"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Employees/PhotoAlbum/PhotoAlbumViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "359"
-            endingLineNumber = "359"
-            landmarkName = "-updateDataWithDataType:dataStr:"
+            startingLineNumber = "624"
+            endingLineNumber = "624"
+            landmarkName = "-loadImages:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "ABF1D050-8CE2-465F-9F72-8512968BA1FD - 490e719da922b41b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__39-[PhotoAlbumViewController loadImages:]_block_invoke_2"
+                  moduleName = "Employees"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/leozbzhang/Dev/EmployeeManagement/Employees/Employees/PhotoAlbum/PhotoAlbumViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "624"
+                  endingLineNumber = "624"
+                  offsetFromSymbolStart = "460">
+               </Location>
+               <Location
+                  uuid = "ABF1D050-8CE2-465F-9F72-8512968BA1FD - 818a372c3c3a2172"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__39-[PhotoAlbumViewController loadImages:]_block_invoke.162"
+                  moduleName = "Employees"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/leozbzhang/Dev/EmployeeManagement/Employees/Employees/PhotoAlbum/PhotoAlbumViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "625"
+                  endingLineNumber = "625"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  uuid = "ABF1D050-8CE2-465F-9F72-8512968BA1FD - 490e719da522b41e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__39-[PhotoAlbumViewController loadImages:]_block_invoke_5"
+                  moduleName = "Employees"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/leozbzhang/Dev/EmployeeManagement/Employees/Employees/PhotoAlbum/PhotoAlbumViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "624"
+                  endingLineNumber = "624"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6757395C-D031-40D3-94BE-162E14AC776B"
+            uuid = "E095FB98-1264-4E45-A238-144A7E89D350"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Employees/PhotoAlbum/PhotoAlbumViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "341"
-            endingLineNumber = "341"
-            landmarkName = "-updateDataWithDataType:dataStr:"
+            startingLineNumber = "622"
+            endingLineNumber = "622"
+            landmarkName = "-loadImages:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E095FB98-1264-4E45-A238-144A7E89D350 - 490e719dad22b4da"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__39-[PhotoAlbumViewController loadImages:]_block_invoke_3"
+                  moduleName = "Employees"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/leozbzhang/Dev/EmployeeManagement/Employees/Employees/PhotoAlbum/PhotoAlbumViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "622"
+                  endingLineNumber = "622"
+                  offsetFromSymbolStart = "328">
+               </Location>
+               <Location
+                  uuid = "E095FB98-1264-4E45-A238-144A7E89D350 - 490e719da122b4db"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__39-[PhotoAlbumViewController loadImages:]_block_invoke_4"
+                  moduleName = "Employees"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/leozbzhang/Dev/EmployeeManagement/Employees/Employees/PhotoAlbum/PhotoAlbumViewController.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "622"
+                  endingLineNumber = "622"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9FB1CC86-42F8-4E3F-B20C-E1CA39167877"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Employees/Login/VC/LoginViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "-pressLogin"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

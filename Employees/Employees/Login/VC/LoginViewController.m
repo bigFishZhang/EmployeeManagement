@@ -2,7 +2,7 @@
 //  LoginViewController.m
 //  Employees
 //
-//  Created by leozbzhang on 2024/5/22.
+//  Created by leo on 2024/5/22.
 //
 
 #import "LoginViewController.h"
@@ -108,7 +108,7 @@
 
             NSString *token = [self getStringFromDictionary:dic forKey:@"token" withDefault:nil];
             NSString *userName = [self getStringFromDictionary:userInfo forKey:@"userName" withDefault:nil];
-            NSInteger userID = [self getIntegerFromDictionary:userInfo forKey:@"ID" withDefault:nil];
+            int64_t userID = [self getIntegerFromDictionary:userInfo forKey:@"ID" withDefault:0];
             [[UserInfoManager shareManager] updateUserInfo:userName userid:userID token:token];
             NSLog(@"pressLogin请求成功url:%@,name:%@,pass:%@", task.currentRequest.URL, responseObject[@"name"], responseObject[@"pass"]);
             dispatch_async(dispatch_get_main_queue(), ^{

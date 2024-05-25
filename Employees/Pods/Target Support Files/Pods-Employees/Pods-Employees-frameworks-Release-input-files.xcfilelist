@@ -1,5 +1,7 @@
 ${PODS_ROOT}/Target Support Files/Pods-Employees/Pods-Employees-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework
+${BUILT_PRODUCTS_DIR}/FYFAppAuthorizations/FYFAppAuthorizations.framework
+${BUILT_PRODUCTS_DIR}/FYFImagePicker/FYFImagePicker.framework
 ${BUILT_PRODUCTS_DIR}/SCLAlertView-Objective-C/SCLAlertView_Objective_C.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/YBImageBrowser/YBImageBrowser.framework
