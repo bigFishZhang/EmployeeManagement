@@ -8,6 +8,7 @@ target 'Employees' do
   # Pods for Employees
   pod 'AFNetworking', '~> 4.0'
   pod 'SCLAlertView-Objective-C'
-
+  pod 'SDWebImage', '~> 5.0'
+  pod 'YBImageBrowser'
 #  pod 'zhPopupController', '~> 2.0'
 end

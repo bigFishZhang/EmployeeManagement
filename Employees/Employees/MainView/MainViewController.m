@@ -19,11 +19,9 @@
 - (void)viewDidLoad 
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    // Do any additional setup after loading the view.
     
+    self.view.backgroundColor = [UIColor whiteColor];
     self.navigationBackgroundColor =  [UIColor colorWithRed:arc4random_uniform (256)/255.0 green:arc4random_uniform(256)/255.0 blue:arc4random_uniform(256)/255.0 alpha:1.0];
-//    self.navigationBackgroundImage = [UIImage imageNamed:@"NavBar64"];
 
     self.navTitleColor =  [UIColor colorWithRed:arc4random_uniform (256)/255.0 green:arc4random_uniform(256)/255.0 blue:arc4random_uniform(256)/255.0 alpha:1.0];
 
@@ -48,32 +46,7 @@
                                            TAB_TITLE_COLOR_SEL: [UIColor systemRedColor],
                                            TAB_TITLE : @"我的图片"                                 //Nav和Tab的标题
                                            },
-//                                       /************第二个控制器配置信息*********************/
-//                                       @{
-//                                           TAB_VC_VIEWCONTROLLER : [[TwoController alloc]init],
-//                                           TAB_NORMAL_ICON : @"icon_me",
-//                                           TAB_SELECTED_ICON : @"icon_me_selected",
-//                                           TAB_TITLE_COLOR: [UIColor blackColor],
-//                                           TAB_TITLE_COLOR_SEL: [UIColor systemRedColor],
-//                                           TAB_TITLE : @"通讯录"
-//                                           },
-//                                       @{
-//
-//                            /*
-//                                如果在此处使用storyboard,需要给storyboard设置storyboardID
-//                                storyboardID 与 VC_STORYBOARD的value 同名 此处为Three
-//                             */
-//                                           TAB_VC_STORYBOARD :@"Three",
-//                                           TAB_NORMAL_ICON : @"icon_discover",
-//                                           TAB_SELECTED_ICON : @"icon_discover_selected",
-//                                           TAB_TITLE_COLOR: [UIColor blackColor],
-//                                           TAB_TITLE_COLOR_SEL: [UIColor systemRedColor],
-//                                           TAB_TITLE : @"发现"
-//                                           },
-                                       
                                        ];
-    
-//    [self jumpToLogin];
 }
 
 

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1134BE822C01797D0064F3A5 /* UserInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1134BE812C01797D0064F3A5 /* UserInfoManager.m */; };
+		1134BE8A2C0183310064F3A5 /* SafeCast.m in Sources */ = {isa = PBXBuildFile; fileRef = 1134BE892C0183310064F3A5 /* SafeCast.m */; };
 		11C5EB542BFE3C81005E9C9D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C5EB532BFE3C81005E9C9D /* AppDelegate.m */; };
 		11C5EB5D2BFE3C81005E9C9D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11C5EB5B2BFE3C81005E9C9D /* Main.storyboard */; };
 		11C5EB5F2BFE3C83005E9C9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11C5EB5E2BFE3C83005E9C9D /* Assets.xcassets */; };
@@ -28,6 +30,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1134BE802C01797D0064F3A5 /* UserInfoManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoManager.h; sourceTree = "<group>"; };
+		1134BE812C01797D0064F3A5 /* UserInfoManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoManager.m; sourceTree = "<group>"; };
+		1134BE882C0183310064F3A5 /* SafeCast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafeCast.h; sourceTree = "<group>"; };
+		1134BE892C0183310064F3A5 /* SafeCast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SafeCast.m; sourceTree = "<group>"; };
 		11C5EB4F2BFE3C81005E9C9D /* Employees.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Employees.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11C5EB522BFE3C81005E9C9D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		11C5EB532BFE3C81005E9C9D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -93,6 +99,15 @@
 			path = VC;
 			sourceTree = "<group>";
 		};
+		1134BE842C01813D0064F3A5 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				1134BE882C0183310064F3A5 /* SafeCast.h */,
+				1134BE892C0183310064F3A5 /* SafeCast.m */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		11C5EB462BFE3C81005E9C9D = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +129,7 @@
 		11C5EB512BFE3C81005E9C9D /* Employees */ = {
 			isa = PBXGroup;
 			children = (
+				1134BE842C01813D0064F3A5 /* Util */,
 				11D325BA2BFF994B0038FC9D /* PhotoAlbum */,
 				11D3259D2BFF98BD0038FC9D /* Nav */,
 				11D325992BFF97A70038FC9D /* MainView */,
@@ -142,6 +158,8 @@
 		11D325972BFF91C00038FC9D /* UserInfo */ = {
 			isa = PBXGroup;
 			children = (
+				1134BE802C01797D0064F3A5 /* UserInfoManager.h */,
+				1134BE812C01797D0064F3A5 /* UserInfoManager.m */,
 			);
 			path = UserInfo;
 			sourceTree = "<group>";
@@ -338,10 +356,12 @@
 				11D325BD2BFF997F0038FC9D /* PhotoAlbumViewController.m in Sources */,
 				11C5EB542BFE3C81005E9C9D /* AppDelegate.m in Sources */,
 				11D325B92BFF98DA0038FC9D /* QLSTabItem.m in Sources */,
+				1134BE822C01797D0064F3A5 /* UserInfoManager.m in Sources */,
 				11D325B12BFF98DA0038FC9D /* QLSTabBarController.m in Sources */,
 				11D325B42BFF98DA0038FC9D /* UIImage+Extension.m in Sources */,
 				11D325B22BFF98DA0038FC9D /* QLSNavigationController.m in Sources */,
 				11C5EB652BFE3C83005E9C9D /* main.m in Sources */,
+				1134BE8A2C0183310064F3A5 /* SafeCast.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
