@@ -14,8 +14,8 @@
             filePath = "Employees/Login/VC/LoginViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "-pressRegister"
             landmarkType = "7">
             <Locations>
@@ -173,8 +173,8 @@
             filePath = "Employees/Login/VC/LoginViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "-pressLogin"
             landmarkType = "7">
          </BreakpointContent>

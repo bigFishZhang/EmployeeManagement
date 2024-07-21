@@ -27,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     self.navigationItem.title = @"Register/Login";
     
     self.view.backgroundColor = [UIColor whiteColor];
