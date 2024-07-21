@@ -154,7 +154,7 @@
         [alert showError:@"Please enter your account password" subTitle:@"Error" closeButtonTitle:@"OK" duration:0.0f];
         return;
     }
-    NSString *url = @"http://45.91.226.193:8987/api/base/register"; // 注册
+    NSString *url = @"http://45.91.226.193:8987/api/base/register"; 
     
     NSDictionary *parameters = @{
         @"username":self.userName.text,

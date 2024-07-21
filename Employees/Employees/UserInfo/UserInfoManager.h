@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*)timestamp;
 
 - (void)cleanLoginInfo;
+- (BOOL)checkNeedUploadWithKey:(NSString *)key;
+- (void)addImageUploadMark:(NSString *)key;
+- (void)cleanAllUploadMark;
+
 @end
 
 NS_ASSUME_NONNULL_END
