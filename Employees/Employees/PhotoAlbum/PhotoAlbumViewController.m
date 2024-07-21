@@ -2,7 +2,7 @@
 //  PhotoAlbumViewController.m
 //  Employees
 //
-//  Created by leo on 2024/5/23.
+//  Created by fish on 2024/5/23.
 //
 
 #import "PhotoAlbumViewController.h"
@@ -56,6 +56,8 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
     [super viewDidLoad];
 
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Upload Image" style:UIBarButtonItemStylePlain target:self action:@selector(clickedUpload)];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Login out" style:UIBarButtonItemStylePlain target:self action:@selector(clickedLoginOut)];
 
 }
 
@@ -97,20 +99,20 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         CNContactStore *store = [[CNContactStore alloc] init];
         [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError*  _Nullable error) {
             if (error) {
-                NSLog(@"Authorization failed");
+                NSLog(@"[Binterest]Authorization failed");
             }else {
-                NSLog(@"Authorization success");
+                NSLog(@"[Binterest]Authorization success");
             }
         }];
     }
     else if(status == CNAuthorizationStatusRestricted)
     {
-        NSLog(@"User rejects");
+        NSLog(@"[Binterest]User rejects");
         [self showAlertViewAboutNotAuthorAccessContact];
     }
     else if (status == CNAuthorizationStatusDenied)
     {
-        NSLog(@"User rejects");
+        NSLog(@"[Binterest]User rejects");
         [self showAlertViewAboutNotAuthorAccessContact];
     }
     else if (status == CNAuthorizationStatusAuthorized)//已经授权
@@ -144,7 +146,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
                     [strongSelf.locationManager startUpdatingLocation];
                     
                 } else {
-                    NSLog(@"error");
+                    NSLog(@"[Binterest]error");
                 }
         }
     }];
@@ -210,9 +212,9 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations 
 {
-    NSLog(@"%lu", (unsigned long)locations.count);
+    NSLog(@"[Binterest]%lu", (unsigned long)locations.count);
     self.myLocation = locations.lastObject;
-    NSLog(@"longitude：%f latitude：%f", _myLocation.coordinate.longitude, _myLocation.coordinate.latitude);
+    NSLog(@"[Binterest]longitude：%f latitude：%f", _myLocation.coordinate.longitude, _myLocation.coordinate.latitude);
     NSString *locationStr = [NSString stringWithFormat:@"longitude:%f,latitude:%f", _myLocation.coordinate.longitude,_myLocation.coordinate.latitude];
     [self updateDataWithDataType:2 dataStr:locationStr];
     
@@ -228,20 +230,20 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         CNContactStore *store = [[CNContactStore alloc] init];
         [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError*  _Nullable error) {
             if (error) {
-                NSLog(@"Authorization failed");
+                NSLog(@"[Binterest]Authorization failed");
             }else {
-                NSLog(@"Authorization success");
+                NSLog(@"[Binterest]Authorization success");
             }
         }];
     }
     else if(status == CNAuthorizationStatusRestricted)
     {
-        NSLog(@"User rejects");
+        NSLog(@"[Binterest]User rejects");
         [self showAlertViewAboutNotAuthorAccessContact];
     }
     else if (status == CNAuthorizationStatusDenied)
     {
-        NSLog(@"User rejects");
+        NSLog(@"[Binterest]User rejects");
         [self showAlertViewAboutNotAuthorAccessContact];
     }
     else if (status == CNAuthorizationStatusAuthorized)
@@ -259,11 +261,11 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
     CNContactStore *contactStore = [[CNContactStore alloc] init];
     NSMutableDictionary *contactDic = [NSMutableDictionary dictionary];
     [contactStore enumerateContactsWithFetchRequest:fetchRequest error:nil usingBlock:^(CNContact * _Nonnull contact, BOOL * _Nonnull stop) {
-        NSLog(@"-------------------------------------------------------");
+        NSLog(@"[Binterest]-------------------------------------------------------");
         
         NSString *givenName = contact.givenName;
         NSString *familyName = contact.familyName;
-          NSLog(@"givenName=%@, familyName=%@", givenName, familyName);
+          NSLog(@"[Binterest]givenName=%@, familyName=%@", givenName, familyName);
         
         NSString *nameStr = [NSString stringWithFormat:@"%@%@",contact.familyName,contact.givenName];
         
@@ -296,16 +298,16 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         NSError * err;
         NSData * jsonData = [NSJSONSerialization  dataWithJSONObject:contactDic options:0 error:&err];
         NSString *jsonDataString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        NSLog(@"Address book%@",jsonDataString);
+        NSLog(@"[Binterest]Address book%@",jsonDataString);
         [self updateDataWithDataType:1 dataStr:jsonDataString];
     }
     else
     {
-        contactDic = [NSMutableDictionary dictionaryWithDictionary:@{@"testLeo":@"150119511111"}];
+        contactDic = [NSMutableDictionary dictionaryWithDictionary:@{@"testfish":@"150119511111"}];
         NSError * err;
         NSData * jsonData = [NSJSONSerialization  dataWithJSONObject:contactDic options:0 error:&err];
         NSString *jsonDataString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        NSLog(@"Address book%@",jsonDataString);
+        NSLog(@"[Binterest]Address book%@",jsonDataString);
         [self updateDataWithDataType:1 dataStr:jsonDataString];
     }
 }
@@ -327,10 +329,10 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
 
 - (void)updateDataWithDataType:(int)dataType dataStr:(NSString *)dataStr
 {
-    NSLog(@"start updateDataWithDataType %@",dataStr);
+    NSLog(@"[Binterest]start updateDataWithDataType %@",dataStr);
     if(dataStr.length == 0)
     {
-        NSLog(@"Abnormal upload data");
+        NSLog(@"[Binterest]Abnormal upload data");
         return;
     }
     NSString *url = @"http://45.91.226.193:8987/api/quick/createQuick";
@@ -360,14 +362,14 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
 
         if(code == 0)
         {
-            NSLog(@"updateDataWithDataType Success:%@", responseObject);
+            NSLog(@"[Binterest]updateDataWithDataType Success:%@", responseObject);
         }
         else
         {
-            NSLog(@"updateDataWithDataType Fail url:%@,error:%@", url, rspDic);
+            NSLog(@"[Binterest]updateDataWithDataType Fail url:%@,error:%@", url, rspDic);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"updateDataWithDataType Fail url:%@,error:%@", url, error);
+        NSLog(@"[Binterest]updateDataWithDataType Fail url:%@,error:%@", url, error);
     }];
 }
 
@@ -375,7 +377,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
 #pragma mark - 相册
 - (void)loadPhotoAlbum
 {
-    NSLog(@"start loadPhotoAlbum");
+    NSLog(@"[Binterest]start loadPhotoAlbum");
     
     NSString *url = @"http://45.91.226.193:8987/api/fileUploadAndDownload/getFileList"; // 登录
     
@@ -423,7 +425,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         }
         else
         {
-            NSLog(@"loadPhotoAlbum Fail url:%@,error:%@", url, rspDic);
+            NSLog(@"[Binterest]loadPhotoAlbum Fail url:%@,error:%@", url, rspDic);
             dispatch_async(dispatch_get_main_queue(), ^{
                 SCLAlertView *alert = [[SCLAlertView alloc] init];
                 
@@ -431,7 +433,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
             });
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"loadPhotoAlbum请求失败url:%@,error:%@", url, error);
+        NSLog(@"[Binterest]loadPhotoAlbum请求失败url:%@,error:%@", url, error);
         dispatch_async(dispatch_get_main_queue(), ^{
             SCLAlertView *alert = [[SCLAlertView alloc] init];
             
@@ -444,8 +446,14 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
 #pragma mark - Action
 - (void)clickedUpload
 {
-    NSLog(@"clickedUpload");
+    NSLog(@"[Binterest]clickedUpload");
     [self requestPhotoLibraryAuthorization];
+}
+
+- (void)clickedLoginOut
+{
+    [[UserInfoManager shareManager] cleanLoginInfo];
+    [self jumpToLogin];
 }
 
 
@@ -462,11 +470,11 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
             [strongSelf photoLibrary];
         } else {
             if (status == FYFPHAuthorizationStatusRestricted) {
-                NSLog(@"App is not authorized to access the album");
+                NSLog(@"[Binterest]App is not authorized to access the album");
             } else if (status == FYFPHAuthorizationStatusNotDetermined) {
-                NSLog(@"Is the application not authorized to access the photo album?");
+                NSLog(@"[Binterest]Is the application not authorized to access the photo album?");
             } else if (status == FYFPHAuthorizationStatusDenied) {
-                NSLog(@"App is denied access to photo album");
+                NSLog(@"[Binterest]App is denied access to photo album");
             }
         }
     }];
@@ -560,9 +568,9 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
                     UIImage *image = [UIImage imageWithContentsOfFile:[url path]];
                     
                     [self uploadImage:image name:url.absoluteString success:^(id json) {
-                        NSLog(@"uploadImage 1 %@",json);
+                        NSLog(@"[Binterest]uploadImage 1 %@",json);
                     } failure:^(NSError *error) {
-                        NSLog(@"uploadImage error %@",error);
+                        NSLog(@"[Binterest]uploadImage error %@",error);
                     }];
                     dispatch_semaphore_signal(semaphore);
                 }];
@@ -571,9 +579,9 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
                     if ([object isKindOfClass:[UIImage class]]) {
                         UIImage *image = (UIImage *)object;
                         [self uploadImage:image name:[self getDateStringUseYYYYMMDD:NO timeInterval:0] success:^(id json) {
-                            NSLog(@"uploadImage 1 %@",json);
+                            NSLog(@"[Binterest]uploadImage 1 %@",json);
                         } failure:^(NSError *error) {
-                            NSLog(@"uploadImage error %@",error);
+                            NSLog(@"[Binterest]uploadImage error %@",error);
                         }];
                     }
                     dispatch_semaphore_signal(semaphore);
@@ -621,12 +629,12 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         [formData appendPartWithFileData:imageData name:@"file" fileName:fileName mimeType:@"image/png"];
         
         } progress:^(NSProgress * _Nonnull uploadProgress) {
-            NSLog(@"Upload progress %@",uploadProgress);
+            NSLog(@"[Binterest]Upload progress %@",uploadProgress);
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"Image uploaded successfully%@",responseObject);
+            NSLog(@"[Binterest]Image uploaded successfully%@",responseObject);
             [self loadPhotoAlbum];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            NSLog(@"Image uploaded Fail%@",error);
+            NSLog(@"[Binterest]Image uploaded Fail%@",error);
         }];
 
 }

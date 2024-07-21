@@ -2,7 +2,7 @@
 //  UserInfoManager.h
 //  Employees
 //
-//  Created by leo on 2024/5/25.
+//  Created by fish on 2024/5/25.
 //
 
 #import <Foundation/Foundation.h>
@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger )getUserid;
 - (NSString *)getToken;
 - (NSString*)timestamp;
+
+- (void)cleanLoginInfo;
 @end
 
 NS_ASSUME_NONNULL_END

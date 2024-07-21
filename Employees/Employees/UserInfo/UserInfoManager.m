@@ -2,7 +2,7 @@
 //  UserInfoManager.m
 //  Employees
 //
-//  Created by leo on 2024/5/25.
+//  Created by fish on 2024/5/25.
 //
 
 #import "UserInfoManager.h"
@@ -36,7 +36,12 @@ static UserInfoManager *manager = nil;
     self.token = token;
 }
 
-
+- (void)cleanLoginInfo
+{
+    self.userName = @"";
+    self.userid = 0;
+    self.token = @"";
+}
 - (NSInteger )getUserid
 {
     return self.userid;

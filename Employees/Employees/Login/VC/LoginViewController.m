@@ -2,7 +2,7 @@
 //  LoginViewController.m
 //  Employees
 //
-//  Created by leo on 2024/5/22.
+//  Created by fish on 2024/5/22.
 //
 
 #import "LoginViewController.h"
@@ -33,20 +33,28 @@
     
     _bUesrName = [[UILabel alloc] initWithFrame: CGRectMake(50, 100, 300, 70)];
     _bUesrName.text = @"userName：";
+    _bUesrName.textColor = [UIColor blackColor];
     [self.view addSubview: _bUesrName];
     
     _userName = [[UITextField alloc] initWithFrame: CGRectMake(50, 150, 300, 50)];
     _userName.borderStyle = UITextBorderStyleLine;
     _userName.placeholder = @"please enter user name......";
+    _userName.textColor = [UIColor blackColor];
+    _userName.layer.borderColor = [UIColor blackColor].CGColor;
+    _userName.layer.borderWidth = 1.0;
     [self.view addSubview: _userName];
     
     _bUserKey = [[UILabel alloc] initWithFrame: CGRectMake(50, 200, 300, 70)];
     _bUserKey.text = @"password:";
+    _bUserKey.textColor = [UIColor blackColor];
     [self.view addSubview: _bUserKey];
     
     _userKey = [[UITextField alloc] initWithFrame: CGRectMake(50, 250, 300, 50)];
     _userKey.borderStyle = UITextBorderStyleLine;
     _userKey.placeholder = @"please enter password......";
+    _userKey.layer.borderColor = [UIColor blackColor].CGColor;
+    _userKey.textColor = [UIColor blackColor];
+    _userKey.layer.borderWidth = 1.0;
     _userKey.secureTextEntry = YES;
     [self.view addSubview: _userKey];
     

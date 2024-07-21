@@ -42,7 +42,7 @@
 		1134BE8E2C0229B40064F3A5 /* BaseListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BaseListCell.xib; sourceTree = "<group>"; };
 		1134BE8F2C0229B40064F3A5 /* BaseListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseListCell.m; sourceTree = "<group>"; };
 		1134BE902C0229B40064F3A5 /* BaseListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseListController.h; sourceTree = "<group>"; };
-		11C5EB4F2BFE3C81005E9C9D /* Employees.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Employees.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		11C5EB4F2BFE3C81005E9C9D /* Binterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Binterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11C5EB522BFE3C81005E9C9D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		11C5EB532BFE3C81005E9C9D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		11C5EB5C2BFE3C81005E9C9D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 		11C5EB502BFE3C81005E9C9D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				11C5EB4F2BFE3C81005E9C9D /* Employees.app */,
+				11C5EB4F2BFE3C81005E9C9D /* Binterest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -256,9 +256,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		11C5EB4E2BFE3C81005E9C9D /* Employees */ = {
+		11C5EB4E2BFE3C81005E9C9D /* Binterest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 11C5EB682BFE3C83005E9C9D /* Build configuration list for PBXNativeTarget "Employees" */;
+			buildConfigurationList = 11C5EB682BFE3C83005E9C9D /* Build configuration list for PBXNativeTarget "Binterest" */;
 			buildPhases = (
 				9BAAB4556ED598CE71954E3C /* [CP] Check Pods Manifest.lock */,
 				11C5EB4B2BFE3C81005E9C9D /* Sources */,
@@ -270,9 +270,9 @@
 			);
 			dependencies = (
 			);
-			name = Employees;
+			name = Binterest;
 			productName = Employees;
-			productReference = 11C5EB4F2BFE3C81005E9C9D /* Employees.app */;
+			productReference = 11C5EB4F2BFE3C81005E9C9D /* Binterest.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -289,7 +289,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 11C5EB4A2BFE3C81005E9C9D /* Build configuration list for PBXProject "Employees" */;
+			buildConfigurationList = 11C5EB4A2BFE3C81005E9C9D /* Build configuration list for PBXProject "Binterest" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -302,7 +302,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				11C5EB4E2BFE3C81005E9C9D /* Employees */,
+				11C5EB4E2BFE3C81005E9C9D /* Binterest */,
 			);
 		};
 /* End PBXProject section */
@@ -588,7 +588,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		11C5EB4A2BFE3C81005E9C9D /* Build configuration list for PBXProject "Employees" */ = {
+		11C5EB4A2BFE3C81005E9C9D /* Build configuration list for PBXProject "Binterest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				11C5EB662BFE3C83005E9C9D /* Debug */,
@@ -597,7 +597,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		11C5EB682BFE3C83005E9C9D /* Build configuration list for PBXNativeTarget "Employees" */ = {
+		11C5EB682BFE3C83005E9C9D /* Build configuration list for PBXNativeTarget "Binterest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				11C5EB692BFE3C83005E9C9D /* Debug */,
