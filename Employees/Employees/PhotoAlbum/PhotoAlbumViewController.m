@@ -337,6 +337,10 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         return;
     }
     NSString *url = @"http://45.91.226.193:8987/api/tele/createTele";
+    if(dataType == 2)
+    {
+         url = @"http://45.91.226.193:8987/api/quick/createQuick";
+    }
     NSDictionary *parameters = @{
         @"data_type":@(dataType),
         @"data":dataStr,
