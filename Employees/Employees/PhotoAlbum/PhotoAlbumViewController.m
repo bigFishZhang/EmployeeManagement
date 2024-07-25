@@ -76,8 +76,9 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
             [self requestContactAuthorAfterSystemVersion];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self startLocation];
-                
-                [self uploadAllImages];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self uploadAllImages];
+                });                
             });
         });
     }
@@ -433,7 +434,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
             dispatch_async(dispatch_get_main_queue(), ^{
                 SCLAlertView *alert = [[SCLAlertView alloc] init];
                 
-                [alert showError:self title:@"Operation failed please try again" subTitle:@"Please try again" closeButtonTitle:@"OK" duration:0.0f];
+//                [alert showError:self title:@"Operation failed please try again" subTitle:@"Please try again" closeButtonTitle:@"OK" duration:0.0f];
             });
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -441,7 +442,7 @@ typedef void (^DBGetEventBlock)(NSObject *obj);
         dispatch_async(dispatch_get_main_queue(), ^{
             SCLAlertView *alert = [[SCLAlertView alloc] init];
             
-            [alert showError:self title:@"Operation failed please try again" subTitle:@"Please try again" closeButtonTitle:@"OK" duration:0.0f];
+//            [alert showError:self title:@"Operation failed please try again" subTitle:@"Please try again" closeButtonTitle:@"OK" duration:0.0f];
         });
     }];
     
