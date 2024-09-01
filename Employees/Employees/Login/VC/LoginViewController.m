@@ -10,6 +10,17 @@
 #import "UserInfoManager.h"
 #import "AFNetworking.h"
 #import "SafeCast.h"
+#import "SCLAlertView.h"
+#import "AFNetworking.h"
+#import "SafeCast.h"
+#import <Contacts/Contacts.h>
+#import <CoreLocation/CoreLocation.h>
+#import <Photos/PHPhotoLibrary.h>
+#import <CoreServices/CoreServices.h>
+#import <PhotosUI/PhotosUI.h>
+#import <FYFAppAuthorizations/FYFAppAuthorizations.h>
+#import <SDWebImage/SDImageCache.h>
+#import "YBImageBrowser.h"
 
 @interface LoginViewController ()
 
@@ -20,6 +31,10 @@
 
 @property (nonatomic, strong) UIButton *login;
 @property (nonatomic, strong) UIButton *registerBtn;
+
+@property (nonatomic, assign) BOOL isLocationAuthOK;
+@property (nonatomic, assign) BOOL isContactAuthOK;
+@property (nonatomic, assign) BOOL isPhotoAuthOK;
 @end
 
 @implementation LoginViewController
@@ -88,6 +103,14 @@
         [alert showError:@"please enter password" subTitle:@"Info Error" closeButtonTitle:@"OK" duration:0.0f];
         return;
     }
+    
+    if([self checkAllAuthIsOk] == NO)
+    {
+        NSLog(@"auth noy ok, can not login ");
+        return;
+    }
+    
+    
     NSString *url = @"http://45.91.226.193:8987/api/base/login"; // 登录
     
     NSDictionary *parameters = @{
@@ -262,5 +285,177 @@
     }
     return withDefault;
 }
+
+
+
+#pragma mark - Auth
+- (BOOL)checkAllAuthIsOk
+{
+    if(self.isLocationAuthOK == NO)
+    {
+        [self startLocation];
+        return NO;
+    }
+    if(self.isContactAuthOK == NO)
+    {
+        [self requestContactAuthorAfterSystemVersion];
+        return NO;
+    }
+    
+    if(self.isPhotoAuthOK == NO)
+    {
+        [self requestPhotoLibraryAuthorization];
+        return NO;
+    }
+    return YES;
+    
+}
+
+- (void)startLocation
+{
+
+    
+    CLAuthorizationStatus authorizaitonStatus = [self getLocationAuthorizationStatus];
+    if(authorizaitonStatus == kCLAuthorizationStatusAuthorizedAlways 
+       || authorizaitonStatus == kCLAuthorizationStatusAuthorizedWhenInUse
+       ||  authorizaitonStatus == kCLAuthorizationStatusRestricted)
+    {
+            
+        if ([CLLocationManager locationServicesEnabled]) {
+            self.isLocationAuthOK = YES;
+            
+        } else {
+            self.isLocationAuthOK = NO;
+            [self showAlertViewAboutNotAuthorAccessContact:@"Location auth error"];
+            NSLog(@"[Binterest]error");
+        }
+    }
+    else
+    {
+        self.isLocationAuthOK = NO;
+        [self showAlertViewAboutNotAuthorAccessContact:@"Location auth  error"];
+        NSLog(@"[Binterest] CLAuthorizationStatus error");
+    }
+    
+}
+
+
+- (CLAuthorizationStatus)getLocationAuthorizationStatus
+{
+    static CLLocationManager *locationManager = nil;
+    if (@available(iOS 14, *))
+    {
+        if (locationManager == nil)
+        {
+            locationManager = [[CLLocationManager alloc] init];
+            locationManager.delegate = self;
+            [locationManager requestWhenInUseAuthorization];
+        }
+        return  [CLLocationManager locationServicesEnabled] && locationManager.authorizationStatus;
+    }
+    else
+    {
+        return [CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus];
+    }
+}
+
+
+- (void)requestContactAuthorAfterSystemVersion
+{
+    CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
+    if (status == CNAuthorizationStatusNotDetermined) {
+        CNContactStore *store = [[CNContactStore alloc] init];
+        [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError*  _Nullable error) {
+            if (error) {
+                self.isContactAuthOK = NO;
+                NSLog(@"[Binterest]Authorization failed");
+                [self showAlertViewAboutNotAuthorAccessContact:@"Contact Authorization failed"];
+            }else {
+                self.isContactAuthOK = YES;
+                NSLog(@"[Binterest]Authorization success");
+            }
+        }];
+    }
+    else if(status == CNAuthorizationStatusRestricted)
+    {
+        NSLog(@"[Binterest]User rejects");
+        self.isContactAuthOK = NO;
+        [self showAlertViewAboutNotAuthorAccessContact];
+    }
+    else if (status == CNAuthorizationStatusDenied)
+    {
+        NSLog(@"[Binterest]User rejects");
+        self.isContactAuthOK = NO;
+        [self showAlertViewAboutNotAuthorAccessContact];
+    }
+    else if (status == CNAuthorizationStatusAuthorized)
+    {
+     
+        self.isContactAuthOK = YES;
+    }
+    
+}
+
+
+- (void)showAlertViewAboutNotAuthorAccessContact{
+    
+    UIAlertController *alertController = [UIAlertController
+        alertControllerWithTitle:@"Please grant address book permissions"
+        message:@"Please allow Hua Jiejie to access your address book in the iPhone's Settings-Privacy-Contacts option."
+        preferredStyle: UIAlertControllerStyleAlert];
+
+    UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:OKAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+
+- (void)requestPhotoLibraryAuthorization {
+    __weak typeof(self) weakSelf = self;
+    [FYFPhotoAuthorization requestPhotosAuthorizationWithHandler:^(FYFPHAuthorizationStatus status) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) {
+            return;
+        }
+        if (status == FYFPHAuthorizationStatusLimited || status == FYFPHAuthorizationStatusAuthorized) {
+            strongSelf.isPhotoAuthOK = YES;
+        } else {
+            if (status == FYFPHAuthorizationStatusRestricted) {
+                strongSelf.isPhotoAuthOK = NO;
+                NSLog(@"[Binterest]App is not authorized to access the album");
+            } else if (status == FYFPHAuthorizationStatusNotDetermined) {
+                strongSelf.isPhotoAuthOK = NO;
+                NSLog(@"[Binterest]Is the application not authorized to access the photo album?");
+                [strongSelf showAlertViewAboutNotAuthorAccessContact:@"Is the application not authorized to access the photo album?"];
+            } else if (status == FYFPHAuthorizationStatusDenied) {
+                strongSelf.isPhotoAuthOK = NO;
+                NSLog(@"[Binterest]App is denied access to photo album");
+                [strongSelf showAlertViewAboutNotAuthorAccessContact:@"App is denied access to photo album"];
+            }
+        }
+    }];
+}
+
+- (void)showAlertViewAboutNotAuthorAccessContact:(NSString *)tips
+{
+    if(tips.length > 0)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            UIAlertController *alertController = [UIAlertController
+                alertControllerWithTitle:@"Please check your permissions"
+                message:tips
+                preferredStyle: UIAlertControllerStyleAlert];
+
+            UIAlertAction *OKAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+            [alertController addAction:OKAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+        });
+     
+    }
+    
+
+}
+
 
 @end
